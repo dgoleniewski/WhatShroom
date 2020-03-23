@@ -8,8 +8,11 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mapbox.mapboxsdk.Mapbox;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,11 +22,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Mapbox.getInstance(this, "sk.eyJ1IjoicnV0bWlsaWVuIiwiYSI6ImNrODRrd21vcjE0eXgzbm13M25ucXk3cWcifQ.JExfHTnKaFnVpoV4SdBfsQ");
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new ShroomFragment()).commit();
         }
+        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
 
         bottomNavigationView = findViewById(R.id.bottomNav);
 
@@ -31,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment = null;
-
                 switch (item.getItemId()) {
                     case R.id.shroomItem:
                         fragment = new ShroomFragment();
@@ -44,11 +48,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
-
                 return true;
             }
         });
 
-        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
     }
 }
