@@ -17,12 +17,13 @@ import com.mapbox.mapboxsdk.Mapbox;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
+    Fragment fragment;
 
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(this, "sk.eyJ1IjoicnV0bWlsaWVuIiwiYSI6ImNrODRrd21vcjE0eXgzbm13M25ucXk3cWcifQ.JExfHTnKaFnVpoV4SdBfsQ");
+        Mapbox.getInstance(this, getString(R.string.keyMapbox));
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
@@ -35,13 +36,17 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = null;
                 switch (item.getItemId()) {
                     case R.id.shroomItem:
                         fragment = new ShroomFragment();
                         break;
                     case R.id.mapItem:
-                        fragment = new MapFragment();
+                        if(fragment == null || fragment.getClass()!=MapFragment.class){
+                            fragment = new MapFragment();
+                        }
+                        break;
+                    case R.id.locationsItem:
+                        fragment = null;
                         break;
                     case R.id.settingsItem:
                         fragment = new SettingsFragment();

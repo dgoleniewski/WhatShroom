@@ -5,13 +5,17 @@
     <item
         android:id="@+id/shroomItem"
         android:icon="@android:drawable/ic_dialog_alert"
-        android:title="@string/grzyb" />
+        android:title="@string/shroom" />
     <item
         android:id="@+id/mapItem"
         android:icon="@android:drawable/ic_dialog_map"
-        android:title="Mapa" />
+        android:title="@string/map" />
+    <item
+        android:id="@+id/locationsItem"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="@string/locations" />
     <item
         android:id="@+id/settingsItem"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Ustawienia" />
+        android:title="@string/settings" />
 </menu>
