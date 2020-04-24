@@ -12,3 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
+machine_learning/data/*
+machine_learning/X.pickle
+machine_learning/y.pickle
+machine_learning/.ipynb_checkpoints
