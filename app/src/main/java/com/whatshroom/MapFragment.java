@@ -26,7 +26,6 @@ import java.util.List;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, PermissionsListener {
-    private View view;
     private MapView mapView;
     private PermissionsManager permissionsManager;
     private MapboxMap mapboxMap;
@@ -36,7 +35,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Permiss
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         context = getContext();
-        view = inflater.inflate(R.layout.map_fragment,container,false);
+        View view = inflater.inflate(R.layout.map_fragment, container, false);
         mapView = view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);

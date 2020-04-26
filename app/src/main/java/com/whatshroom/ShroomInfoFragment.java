@@ -1,5 +1,6 @@
 package com.whatshroom;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,31 +12,27 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 
 public class ShroomInfoFragment extends Fragment {
 
-    TextView nameOfShroomTextView, probabilityTextView;
-    ImageView shroomImageView;
-    Button againButton;
-    View view;
-    String shroomName;
-    Float shroomProbability;
 
-
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.shroom_info_fragment, container, false);
-        nameOfShroomTextView = view.findViewById(R.id.nameOfShroomextView);
-        probabilityTextView = view.findViewById(R.id.probabilityTextView);
-        shroomImageView = view.findViewById(R.id.shroomImageView);
-        againButton = view.findViewById(R.id.againButton);
-        shroomName = getArguments().getString("shroomName");
-        shroomProbability = getArguments().getFloat("shroomProbability");
+        View view = inflater.inflate(R.layout.shroom_info_fragment, container, false);
+        TextView nameOfShroomTextView = view.findViewById(R.id.nameOfShroomextView);
+        TextView probabilityTextView = view.findViewById(R.id.probabilityTextView);
+        ImageView shroomImageView = view.findViewById(R.id.shroomImageView);
+        Button againButton = view.findViewById(R.id.againButton);
+        String shroomName = Objects.requireNonNull(getArguments()).getString("shroomName", "null");
+        float shroomProbability = getArguments().getFloat("shroomProbability");
 
         againButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new ShroomFragment()).commit();
+                Objects.requireNonNull(getFragmentManager()).beginTransaction().replace(R.id.fragmentContainer, new ShroomFragment()).commit();
             }
         });
 
@@ -79,7 +76,7 @@ public class ShroomInfoFragment extends Fragment {
         }
 
         nameOfShroomTextView.setText("Znalazłeś " + shroomName +"*");
-        probabilityTextView.setText("*Z prawdopodobieństwem " + shroomProbability.toString());
+        probabilityTextView.setText("*Z prawdopodobieństwem " + shroomProbability);
 
         return view;
     }

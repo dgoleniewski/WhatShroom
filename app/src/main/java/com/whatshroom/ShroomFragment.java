@@ -1,5 +1,6 @@
 package com.whatshroom;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,23 +29,17 @@ import java.util.Objects;
 import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class ShroomFragment extends Fragment {
-    static final int REQUEST_TAKE_PHOTO = 1;
+    private static final int REQUEST_TAKE_PHOTO = 1;
 
-    ShroomsClassifier shroomsClassifier;
-    String currentPhotoPath;
-    Pair<String, Float> shroom = new Pair<>("",-1f);
-    File photoFile = null;
-    Button photoButton;
-    View view;
-    Bundle bundle;
+    private ShroomsClassifier shroomsClassifier;
+    private File photoFile = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.shroom_fragment,container,false);
+        View view = inflater.inflate(R.layout.shroom_fragment, container, false);
         shroomsClassifier = new ShroomsClassifier(Objects.requireNonNull(getContext()));
-
-        photoButton = view.findViewById(R.id.photoButton);
+        Button photoButton = view.findViewById(R.id.photoButton);
 
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +52,7 @@ public class ShroomFragment extends Fragment {
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+        if (takePictureIntent.resolveActivity(Objects.requireNonNull(getActivity()).getPackageManager()) != null) {
             try {
                 photoFile = createImageFile();
             } catch (IOException e) {
@@ -73,14 +67,11 @@ public class ShroomFragment extends Fragment {
     }
 
     private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = timeStamp + "_WhatShroom";
         File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
-        File image = File.createTempFile(imageFileName,".jpg", storageDir);
-
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
+        return File.createTempFile(imageFileName,".jpg", storageDir);
     }
 
     @Override
@@ -88,17 +79,14 @@ public class ShroomFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK){
             Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getPath());
-            shroom = shroomsClassifier.predict(bitmap);
-            bundle = new Bundle();
+            Pair<String, Float> shroom = shroomsClassifier.predict(bitmap);
+            Bundle bundle = new Bundle();
             bundle.putString("shroomName", shroom.first);
             bundle.putFloat("shroomProbability", shroom.second);
             ShroomInfoFragment shroomInfoFragment = new ShroomInfoFragment();
             shroomInfoFragment.setArguments(bundle);
 
-            getFragmentManager().beginTransaction().replace(R.id.fragmentContainer, shroomInfoFragment).commit();
-
-//            ImageView imageView = view.findViewById(R.id.shroomImageView);
-//            imageView.setImageBitmap(bitmap);
+            Objects.requireNonNull(getFragmentManager()).beginTransaction().replace(R.id.fragmentContainer, shroomInfoFragment).commit();
         }
     }
 }
