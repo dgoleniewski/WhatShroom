@@ -7,4 +7,7 @@
     <string name="turn_camera">Włącz aparat</string>
     <string name="locations">Zapisane miejsca</string>
     <string name="keyMapbox">sk.eyJ1IjoicnV0bWlsaWVuIiwiYSI6ImNrOTg3Mzh0eDE0c3IzcG4xajEzbWRocGUifQ.7wTQcxhRgIkySG_sk2Gpxg</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
