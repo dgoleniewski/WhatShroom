@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new ShroomFragment();
                         break;
                     case R.id.mapItem:
-                        if(fragment == null || fragment.getClass()!=MapFragment.class){
-                            fragment = new MapFragment();
+                        if(fragment == null || fragment.getClass()!=GoogleMapsFragment.class){
+                            fragment = new GoogleMapsFragment();
                         }
                         break;
                     case R.id.locationsItem:
