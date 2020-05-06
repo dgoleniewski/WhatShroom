@@ -2,21 +2,47 @@ package com.whatshroom;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.concurrent.Executor;
 
 public class GoogleMapsFragment extends Fragment {
+    private boolean newLocation;
+    private ImageButton addLocationImageButton;
+    private View view;
+
+
+    public GoogleMapsFragment(){
+        this.newLocation = false;
+    }
+    public GoogleMapsFragment(boolean newLocation){
+        this.newLocation = newLocation;
+    }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -30,10 +56,20 @@ public class GoogleMapsFragment extends Fragment {
          * user has installed Google Play services and returned to the app.
          */
         @Override
-        public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        public void onMapReady(final GoogleMap googleMap) {
+            googleMap.setMyLocationEnabled(true);
+            if(newLocation){
+                googleMap.clear();
+                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        googleMap.clear();
+                        googleMap.addMarker(new MarkerOptions().position(latLng));
+                        addLocationImageButton.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+
         }
     };
 
@@ -42,7 +78,17 @@ public class GoogleMapsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.google_maps_fragment, container, false);
+        view =  inflater.inflate(R.layout.google_maps_fragment, container, false);
+
+        addLocationImageButton = view.findViewById(R.id.addLocationImageButton);
+        addLocationImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        return view;
     }
 
     @Override

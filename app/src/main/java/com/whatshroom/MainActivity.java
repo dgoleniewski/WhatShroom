@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new ShroomFragment()).commit();
         }
-        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION}, 2);
 
         bottomNavigationView = findViewById(R.id.bottomNav);
 
@@ -41,11 +41,12 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.mapItem:
                         if(fragment == null || fragment.getClass()!=GoogleMapsFragment.class){
-                            fragment = new GoogleMapsFragment();
+                            fragment = new GoogleMapsFragment(false);
                         }
+
                         break;
                     case R.id.locationsItem:
-                        fragment = null;
+                        fragment = new LocationsFragment();
                         break;
                     case R.id.settingsItem:
                         fragment = new SettingsFragment();
@@ -55,6 +56,5 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 }
