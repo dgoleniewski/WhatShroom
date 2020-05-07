@@ -84,6 +84,7 @@ public class GoogleMapsFragment extends Fragment {
         addLocationImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new LocationFormFragment()).commit();
 
             }
         });

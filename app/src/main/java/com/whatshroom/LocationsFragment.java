@@ -29,7 +29,7 @@ public class LocationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.locations_fragment, container, false);
         locations = new LinkedList<>();
-        locations.add(new FavoriteLocation(null,"Dodaj nową lokalizację"));
+        locations.add(new FavoriteLocation(null,"Dodaj nową lokalizację", ""));
         recyclerView = view.findViewById(R.id.recyclerView);
         adapter = new MyAdapter(getActivity(), locations);
         recyclerView.setAdapter(adapter);
