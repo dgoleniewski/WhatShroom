@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RemoveLocationDialogFragment extends DialogFragment {
@@ -26,7 +27,6 @@ public class RemoveLocationDialogFragment extends DialogFragment {
     private String locationsString;
     private List<FavoriteLocation> locations;
 
-
     public RemoveLocationDialogFragment(Context context, int position){
         this.context = context;
         this.position = position;
@@ -37,12 +37,8 @@ public class RemoveLocationDialogFragment extends DialogFragment {
         builder.setMessage("Czy na pewno chcesz usunąć?")
                 .setPositiveButton("Tak", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        preferences = context.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
+                        locations = getLocationsFromSharedPreferences();
                         editor = preferences.edit();
-                        gson = new Gson();
-                        locationsString = preferences.getString("locations",null);
-                        Type type = new TypeToken<ArrayList<FavoriteLocation>>(){}.getType();
-                        locations = gson.fromJson(locationsString,type);
                         locations.remove(position);
                         locationsString = gson.toJson(locations);
                         editor.putString("locations", locationsString);
@@ -51,10 +47,20 @@ public class RemoveLocationDialogFragment extends DialogFragment {
                     }
                 })
                 .setNegativeButton("Nie", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
+                    public void onClick(DialogInterface dialog, int id) { }
                 });
         return builder.create();
+    }
+
+    private List<FavoriteLocation> getLocationsFromSharedPreferences(){
+        preferences = context.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
+        gson = new Gson();
+        locationsString = preferences.getString("locations",null);
+        Type type = new TypeToken<ArrayList<FavoriteLocation>>(){}.getType();
+        List<FavoriteLocation> loc = gson.fromJson(locationsString, type);
+        if(loc == null){
+            return new LinkedList<>();
+        }
+        return loc;
     }
 }

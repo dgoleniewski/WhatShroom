@@ -1,16 +1,13 @@
 package com.whatshroom;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -18,7 +15,6 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Context context;
     private List<FavoriteLocation> locations;
-    private FavoriteLocation location;
     private Bundle savedInstanceState;
 
     public MyAdapter(Context context, List<FavoriteLocation> data, Bundle savedInstanceState) {
@@ -37,7 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        location = locations.get(position);
+        FavoriteLocation location = locations.get(position);
         holder.shroomLocationTextView.setText(location.getName());
         holder.descriptonTextView.setText(location.getDescription());
         holder.dateTextView.setText(location.getDate());
