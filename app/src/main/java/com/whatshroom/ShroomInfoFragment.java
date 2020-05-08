@@ -14,9 +14,7 @@ import android.widget.TextView;
 
 import java.util.Objects;
 
-
 public class ShroomInfoFragment extends Fragment {
-
 
     @SuppressLint("SetTextI18n")
     @Override
