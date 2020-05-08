@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.mapbox.mapboxsdk.Mapbox;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(this, getString(R.string.keyMapbox));
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
@@ -31,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION}, 2);
 
         bottomNavigationView = findViewById(R.id.bottomNav);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -43,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
                         if(fragment == null || fragment.getClass()!=GoogleMapsFragment.class){
                             fragment = new GoogleMapsFragment(false);
                         }
-
                         break;
                     case R.id.locationsItem:
                         fragment = new LocationsFragment();

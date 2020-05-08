@@ -30,7 +30,6 @@ import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class ShroomFragment extends Fragment {
     private static final int REQUEST_TAKE_PHOTO = 1;
-
     private ShroomsClassifier shroomsClassifier;
     private File photoFile = null;
 
