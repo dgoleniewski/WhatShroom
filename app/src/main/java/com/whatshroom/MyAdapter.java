@@ -56,7 +56,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         @Override
         public void onClick(View v) {
-            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new GoogleMapsFragment(true)).commit();
+            if(shroomLocationTextView.getText().toString().equals("Dodaj nową lokalizację")){
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new GoogleMapsFragment(true)).commit();
+            }
         }
     }
 }

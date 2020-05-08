@@ -20,8 +20,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 public class LocationFormFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
     private View view;
@@ -35,6 +41,8 @@ public class LocationFormFragment extends Fragment implements DatePickerDialog.O
     private SharedPreferences.Editor editor;
     private Gson gson;
     private String json;
+    private List<FavoriteLocation> locations;
+    private String locationsString;
 
 
     public LocationFormFragment(LatLng latLng) {
@@ -62,16 +70,24 @@ public class LocationFormFragment extends Fragment implements DatePickerDialog.O
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FavoriteLocation location = new FavoriteLocation(
+                preferences = context.getSharedPreferences("sharedPreferences",Context.MODE_PRIVATE);
+                editor = preferences.edit();
+                gson = new Gson();
+                locationsString = preferences.getString("locations",null);
+                Type type = new TypeToken<ArrayList<FavoriteLocation>>(){}.getType();
+
+                locations = gson.fromJson(locationsString,type);
+                if(locations==null)
+                    locations = new LinkedList<>();
+                locations.add(new FavoriteLocation(
                         latLng,
                         titleEditText.getText().toString(),
                         descriptionEditText.getText().toString(),
                         setDateTextView.getText().toString()
-                );
-                preferences = context.getSharedPreferences("sharedPreferences",Context.MODE_PRIVATE);
-                editor = preferences.edit();
-                gson = new Gson();
-                json = gson.toJson();
+                ));
+                json = gson.toJson(locations);
+                editor.putString("locations", json);
+                editor.apply();
             }
         });
 

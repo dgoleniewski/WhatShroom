@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -28,13 +29,25 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 public class GoogleMapsFragment extends Fragment {
     private boolean newLocation;
     private ImageButton addLocationImageButton;
     private View view;
+    private LatLng markerLatLng;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private Context context;
+    private Gson gson;
+    private String locationsString;
+    private List<FavoriteLocation> locations;
 
 
     public GoogleMapsFragment(){
@@ -65,9 +78,23 @@ public class GoogleMapsFragment extends Fragment {
                     public void onMapClick(LatLng latLng) {
                         googleMap.clear();
                         googleMap.addMarker(new MarkerOptions().position(latLng));
+                        markerLatLng = latLng;
                         addLocationImageButton.setVisibility(View.VISIBLE);
                     }
                 });
+            }
+            else {
+                sharedPreferences = context.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
+                editor = sharedPreferences.edit();
+                gson = new Gson();
+                locationsString = sharedPreferences.getString("locations",null);
+                Type type = new TypeToken<ArrayList<FavoriteLocation>>(){}.getType();
+                locations = gson.fromJson(locationsString,type);
+
+                for (FavoriteLocation location :
+                        locations) {
+                    googleMap.addMarker(new MarkerOptions().position(location.getLatLng()).title(location.getName()));
+                }
             }
 
         }
@@ -79,12 +106,12 @@ public class GoogleMapsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.google_maps_fragment, container, false);
-
+        context = getContext();
         addLocationImageButton = view.findViewById(R.id.addLocationImageButton);
         addLocationImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new LocationFormFragment()).commit();
+                ((FragmentActivity) getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new LocationFormFragment(markerLatLng)).commit();
 
             }
         });
