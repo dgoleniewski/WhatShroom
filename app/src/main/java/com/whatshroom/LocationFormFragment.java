@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -40,7 +41,6 @@ public class LocationFormFragment extends Fragment implements DatePickerDialog.O
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Gson gson;
-    private String json;
     private List<FavoriteLocation> locations;
     private String locationsString;
 
@@ -70,24 +70,34 @@ public class LocationFormFragment extends Fragment implements DatePickerDialog.O
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                preferences = context.getSharedPreferences("sharedPreferences",Context.MODE_PRIVATE);
-                editor = preferences.edit();
-                gson = new Gson();
-                locationsString = preferences.getString("locations",null);
-                Type type = new TypeToken<ArrayList<FavoriteLocation>>(){}.getType();
-
-                locations = gson.fromJson(locationsString,type);
-                if(locations==null)
-                    locations = new LinkedList<>();
-                locations.add(new FavoriteLocation(
-                        latLng,
-                        titleEditText.getText().toString(),
-                        descriptionEditText.getText().toString(),
-                        setDateTextView.getText().toString()
-                ));
-                json = gson.toJson(locations);
-                editor.putString("locations", json);
-                editor.apply();
+                if(!titleEditText.getText().toString().equals("") && !setDateTextView.getText().toString().equals("DD/MM/RRRR")){
+                    preferences = context.getSharedPreferences("sharedPreferences",Context.MODE_PRIVATE);
+                    editor = preferences.edit();
+                    gson = new Gson();
+                    locationsString = preferences.getString("locations",null);
+                    Type type = new TypeToken<ArrayList<FavoriteLocation>>(){}.getType();
+                    locations = gson.fromJson(locationsString,type);
+                    if(locations==null)
+                        locations = new LinkedList<>();
+                    locations.add(new FavoriteLocation(
+                            latLng,
+                            titleEditText.getText().toString(),
+                            descriptionEditText.getText().toString(),
+                            setDateTextView.getText().toString()
+                    ));
+                    locationsString = gson.toJson(locations);
+                    editor.putString("locations", locationsString);
+                    editor.apply();
+                }
+                else if(titleEditText.getText().toString().equals("") && !setDateTextView.getText().toString().equals("DD/MM/RRRR")){
+                    Toast.makeText(context, "Napisz tytuł", Toast.LENGTH_LONG).show();
+                }
+                else if(!titleEditText.getText().toString().equals("") && setDateTextView.getText().toString().equals("DD/MM/RRRR")){
+                    Toast.makeText(context, "Wybierz datę klikając w ikonę kalendarza", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(context, "Napisz tytuł i wybierz datę klikając w ikonę kalendarza", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
