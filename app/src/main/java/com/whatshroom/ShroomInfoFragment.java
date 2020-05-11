@@ -48,7 +48,7 @@ public class ShroomInfoFragment extends Fragment {
                 shroomImageView.setImageResource(R.drawable.hubiak_pospolity);
                 break;
             case("koźlarz czerwony"):
-                shroomImageView.setImageResource(R.drawable.kozlarz_czerowny);
+                shroomImageView.setImageResource(R.drawable.kozlarz_czerwony);
                 break;
             case("lisówka pomarańczowa"):
                 shroomImageView.setImageResource(R.drawable.lisowka_pomaranczowa);
@@ -57,7 +57,7 @@ public class ShroomInfoFragment extends Fragment {
                 shroomImageView.setImageResource(R.drawable.maslak_zolty);
                 break;
             case("muchomor czerwony"):
-                shroomImageView.setImageResource(R.drawable.muchomor_czerowony);
+                shroomImageView.setImageResource(R.drawable.muchomor_czerwony);
                 break;
             case("muchomor sromotnikowy"):
                 shroomImageView.setImageResource(R.drawable.muchomor_sromotnikowy);
