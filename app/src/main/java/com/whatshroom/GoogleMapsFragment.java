@@ -62,11 +62,12 @@ public class GoogleMapsFragment extends Fragment {
                 String locationsString = sharedPreferences.getString("locations", null);
                 Type type = new TypeToken<ArrayList<FavoriteLocation>>(){}.getType();
                 List<FavoriteLocation> locations = gson.fromJson(locationsString, type);
-                for (FavoriteLocation location :
-                        Objects.requireNonNull(locations)) {
-                    googleMap.addMarker(new MarkerOptions().
-                            position(location.getLatLng()).
-                            title(location.getName()));
+                if(locations != null){
+                    for (FavoriteLocation location : locations) {
+                        googleMap.addMarker(new MarkerOptions().
+                                position(location.getLatLng()).
+                                title(location.getName()));
+                    }
                 }
             }
         }
