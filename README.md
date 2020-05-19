@@ -19,11 +19,11 @@ gathered images due to willingness to avoid licensing problems). The app uses re
 a valid input data for our model and classify a picture to recognized mushroom specie with given probability. 
 
 ## Screenshots
-![5](/screenshots/5.png)
-![1](/screenshots/1.png)
-![2](/screenshots/2.png)
-![3](/screenshots/3.png)
-![4](/screenshots/4.png)
+<img src="/screenshots/5.png" width="600"/>
+<img src="/screenshots/1.png" width="600"/>
+<img src="/screenshots/2.png" width="600"/>
+<img src="/screenshots/3.png" width="600"/>
+<img src="/screenshots/4.png" width="600"/>
 
 ## Technologies
 You can find our techstack [here](https://stackshare.io/dgoleniewski/whatshroom)
