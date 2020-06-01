@@ -3,8 +3,8 @@
 
 ## Table of contents
 * [General info](#general-info)
-* [Main Features](#main-features)
 * [Authors](#authors)
+* [License](#license)
 * [Software requirements specification](#software-requirements-specification)
 * [Technologies](#technologies)
 * [Setup](#setup)
@@ -20,10 +20,34 @@ Lite interpreter in our Android application. Whole process of creating the model
 gathered images due to willingness to avoid licensing problems). The app uses rear camera to take a picture and then prepare it as
 a valid input data for our model and classify a picture to recognized mushroom specie with given probability. 
 
-## Main Features
-* Recognizing and classifying 12 species of mushrooms based picture with effectiveness at 68-75%
-* Taking a picture with Android application classifying it with the model
-* Marking a finding on the map to save it for later
+## Authors
+* [Damian Goleniewski](https://github.com/dgoleniewski) - Android application
+* [Blazej Tempski](https://github.com/jaheyy) - Machine learning and its implementation on Android
+* [Arkadiusz Wawrzyniak](https://github.com/ArekadiuszBy) - Concept and representation
+
+## License
+This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+## Software requirements specification
+Functional
+* **F1** Creation of convolitonal neural network, colorful small size image (as array of floats) as input and a mushroom specie (integer) and probability (float) as output
+* **F2** Deploying a model as .tflite file on Android application and interpreting it via Tensorflow Lite Interpreter
+* **F3** Android application based on Fragments, not Activities
+* **F4** Taking a picture
+* **F5** Delivering taken picture (as array of floats) and receiving an output
+* **F6** Displaying result to end user (mushroom specie and probability of prediction)
+* **F7** Saving markers on map in application, with short title, description and date. The data should be saved in application shared preferences and readed automatically on application start.
+
+Nonfunctional
+* **N1** Good readability
+* **N2** Application in forest colors - is to be associated with nature 
+* **N3** Model effectiveness over 70% on validation data.
+* **N4** Ease of use
+* **N5** Documentation kept to a minimum
+* **N6** Main functionality - mushroom recognition without internet access
+* **N7** Application should work on Android API 21 or newer
+* **N8** Bottom Navbar in app
+
 
 ## Technologies
 You can find our techstack [here](https://stackshare.io/dgoleniewski/whatshroom)
@@ -41,31 +65,6 @@ To open up Jupyter Notebook change directory in terminal to the one with reposit
 ```
 jupyter notebook
 ```
-
-## Authors
-* [Damian Goleniewski](https://github.com/dgoleniewski) - Android application
-* [Blazej Tempski](https://github.com/jaheyy) - Machine learning and its implementation on Android
-* [Arkadiusz Wawrzyniak](https://github.com/ArekadiuszBy) - Concept and representation
-
-## Software requirements specification
-Functional
-* Creation of convolitonal neural network, colorful small size image (as array of floats) as input and a mushroom specie (integer) and probability (float) as output
-* Deploying a model as .tflite file on Android application and interpreting it via Tensorflow Lite Interpreter
-* Android application based on Fragments, not Activities
-* Taking a picture
-* Delivering taken picture (as array of floats) and receiving an output
-* Displaying result to end user (mushroom specie and probability of prediction)
-* Saving markers on map in application, with short title, description and date. The data should be saved in application shared preferences and readed automatically on application start.
-
-Nonfunctional
-* Good readability
-* Application in forest colors - is to be associated with nature 
-* Model effectiveness over 70% on validation data.
-* Ease of use
-* Documentation kept to a minimum
-* Main functionality - mushroom recognition without internet access
-* Application should work on Android API 21 or newer
-* Bottom Navbar in app
 
 ## Status
 Project has its main functionalities, but it's still in progress, especially front-end needs to be better.
