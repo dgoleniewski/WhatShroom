@@ -7,6 +7,7 @@
 * [License](#license)
 * [Software requirements specification](#software-requirements-specification)
 * [Technologies](#technologies)
+* [Architecture](#architecture)
 * [Setup](#setup)
 * [Testing](#testing)
 * [Status](#status)
@@ -51,6 +52,18 @@ Nonfunctional
 
 ## Technologies
 You can find our techstack [here](https://stackshare.io/dgoleniewski/whatshroom)
+
+## Architecture
+### System
+The system consists of mobile application on Android platform and machine learning model trained with Tensorflow. They communicate with each other via Tensorflow Lite interpreter situated in Android application. The interpreter can read a serialized version of pre-trained model, which is now saved in .tflide format.
+### Application module  
+Application consists of 2 submodules.  
+The first module allows end user to take a picture and then shows a desired output. It does so by converting an image to a bitmap and then to multidimentional array of floats. Each value in array represents a single color value (R, G or B) on a single pixel. An array is then transfered to the model, where it passes all layers and gives a desired output - an integer representing a mushroom label, and a probability of prediction. Based on the integer the mushroom name and image (static file), also the probablity of prediction are displayed to a user.  
+The second module uses Google Maps for displaying a map to the user. A user has can add a markup with title, description and date to the via Floating Action Button. Saved markups can be viewed in the map and also in a RecyclerView android feature, where each item represents a markup.
+### Machine Learning module  
+Machine learning module includes a whole process of gathering data, creating validation sets, creating model structure, training, validating and serializing a model. The data, which are images in JPEG/JFIF format, have been download with help of a simple Python automation script from Bing Images. The script is our modification of [google-images-download] (https://github.com/hardikvasa/google-images-download) library created by [Hardik Vasa](https://github.com/hardikvasa).  
+The data is randomly diveded into train set, test set and validation set. Model structure consists of an input layer, 15 hidden layers and an output layer. Hidden layers consists of 3 sets of 2D Convolution, Activation ReLU function and a 2D Max Pooling function. This is a classic convolutional neural network for image recognition. The next layers are combination of Flatten function, ReLu and Dense layers to easily reduce the number of neurons to 12 output neurons. Each of output neuron represents a different mushroom specie. The model is automatically trained with training data only, which is also automatically previously divided into multiple batches. Each batch consist of 32 images. The model is trained on each batch randomly 15 times (number of epochs).  
+The model is then serialized to .tflite file. The creation of model is one time process and should be continued in the future when there will be more available data to make model better.
 
 ## Setup
 To setup a project, you need to clone the repo or download its content and open up the main folder in Android Studio, version 3.6.3 or newer
