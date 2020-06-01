@@ -66,6 +66,9 @@ To open up Jupyter Notebook change directory in terminal to the one with reposit
 jupyter notebook
 ```
 
+## Testing
+Test scenario [Download](https://github.com/dgoleniewski/WhatShroom/raw/master/test_scenario.xlsx)
+
 ## Status
 Project has its main functionalities, but it's still in progress, especially front-end needs to be better.
 
