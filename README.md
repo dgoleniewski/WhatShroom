@@ -45,7 +45,7 @@ Nonfunctional
 * **N4** Ease of use
 * **N5** Documentation kept to a minimum
 * **N6** Main functionality - mushroom recognition without internet access
-* **N7** Application should work on Android API 21 or newer
+* **N7** Application should work on Android API 23 or newer
 * **N8** Bottom Navbar in app
 
 
