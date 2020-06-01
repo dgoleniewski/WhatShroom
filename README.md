@@ -8,9 +8,9 @@
 * [Software requirements specification](#software-requirements-specification)
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Testing](#testing)
 * [Status](#status)
 * [Screenshots](#screenshots)
-* [Contact](#contact)
 
 ## General info
 WhatShroom is a student project for Android. It has machine learning back-end based on Python's Tensorflow. For creating our model
